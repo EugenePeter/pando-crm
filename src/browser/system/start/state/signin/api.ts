@@ -1,7 +1,8 @@
 import axios from "axios";
-export const checkAuthorization = async () => {
+export const login = async (value) => {
+  console.log("API VALUE:", value)
   try {
-    const { data } = await axios.get("http://localhost:1010/currentuser", {
+    const { data } = await axios.get("http://localhost:1010/login", {
       withCredentials: true,
     });
     // console.log("IS AUTHORIZED:", data);

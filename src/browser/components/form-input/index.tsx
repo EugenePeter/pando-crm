@@ -19,9 +19,10 @@ interface FormInputProps {
   };
   current_step?: any;
   type?: string;
+  disabled?: boolean
 }
 const FormInput: React.FC<FormInputProps> = (props) => {
-  const { value, placeholder, label, actions, name, current_step, type, accessor } = props;
+  const { value, placeholder, label, actions, name, current_step, type, accessor, disabled } = props;
   const [is_input_active, setInputActive] = useState(false);
   const [is_label_click, setLabelClick] = useState(false);
 
@@ -74,8 +75,10 @@ const FormInput: React.FC<FormInputProps> = (props) => {
           onClick={() => setInputActive(true)}
           onBlur={handleBlurInput}
           ref={inputRef}
+          disabled={disabled}
           name={name}
         />
+        
       )}
       {type && type === "textarea" && (
         <TextArea

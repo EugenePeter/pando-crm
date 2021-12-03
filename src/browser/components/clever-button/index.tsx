@@ -53,5 +53,6 @@ export const Button = styled.button<IButtons>`
   ${getButtonStyles}
   &:disabled {
     background-color: #9dc0b4 !important;
+    cursor: not-allowed;
   }
 `;

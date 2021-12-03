@@ -1,28 +1,34 @@
-import { takeLatest, put, call, all, delay } from "redux-saga/effects";
-import { LoginTypes, LiveSearch, AuthTypes } from "./types";
-import { LoginUserActionSuccess } from "./actions";
-import { checkAuthorization } from "./api";
+import { takeLatest, put, call, select } from "redux-saga/effects";
+import { LoginTypes } from "./types";
+import {login} from './api'
+import { UpdateLoginHasPendingChange } from "./actions";
 
-// export const authorizedUser = function* (isAuthorize) {
-//   yield put(AuthorizeUser(isAuthorize));
-// };
-
-// export const unAuthorizedUser = function* (isAuthorize) {
-//   yield put(UnauthorizeUser(isAuthorize));
-// };
-
-// export const checkAuthAsync = function* () {
-//   try {
-//     const response = yield checkAuthorization();
-//     const { isAuthorize } = response;
-//     isAuthorize ? yield unAuthorizedUser(isAuthorize) : yield unAuthorizedUser(isAuthorize);
-//   } catch (error) {}
-// };
-
-// export const checkAuthStart = function* () {
-//   yield takeLatest(AuthTypes.CHECK_AUTH_START, checkAuthAsync);
-// };
-
-export const checkAuthSaga = function* () {
-  // yield call(checkAuthStart);
+export const checkIfLoginFieldsHasValue = function* () {
+  const {email = '', password = ''} = yield select((state) => state.loginReducer || {})
+  yield email && password ? put(UpdateLoginHasPendingChange({has_pending_changes: true})) : put(UpdateLoginHasPendingChange({has_pending_changes: false}))
+  yield console.log("SELECTOR:", `email : ${email} password: ${password}`)
 };
+
+export const handleLoginFieldChange = function* () {
+  yield takeLatest(LoginTypes.LOGIN_FIELD_CHANGE, checkIfLoginFieldsHasValue )
+}
+
+export const loginSaga = function* () {
+  yield call(handleLoginFieldChange)
+}
+
+const loginSubmitAsync = function* (value) {
+  const {email = '', password = ''} = yield select((state) => state.loginReducer || {})
+  console.log("LOGIN SUBMIT VALUE:" , value)
+  try {
+    const response = yield login({email, password})
+  } catch(error) {}
+}
+
+const loginSubmitStart = function* () {
+  yield takeLatest(LoginTypes.LOGIN_USER_START, loginSubmitAsync)
+}
+
+export const loginSubmitSaga = function* () {
+  yield call(loginSubmitStart)
+}

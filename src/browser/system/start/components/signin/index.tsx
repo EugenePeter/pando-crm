@@ -12,7 +12,7 @@ const Signin = () => {
   const dispatch = useDispatch();
   const state = useSelector((state: RootStateOrAny) => state.loginReducer);
   const { submitting, has_pending_changes } = state;
-  console.log("STATE STATE ASTATE:", state);
+  console.log("READING STATE:", state);
 
   const field_value_ref = useRef(null);
 
@@ -25,7 +25,6 @@ const Signin = () => {
 
   const handleSubmit = (event: any) => {
     event.preventDefault();
-    alert();
     dispatch(LoginUserActionStart());
   };
 
@@ -50,7 +49,7 @@ const Signin = () => {
               <p>just a moment</p>
             </>
           ) : (
-            <h4>sign in</h4>
+            <h4 style={{width: '100%', textAlign: 'center'}}>sign in</h4>
           )}
           {fields &&
             Object.entries(fields).map(([key, value], index: number) => (
@@ -63,12 +62,13 @@ const Signin = () => {
                 actions={actionsProp ?? {}}
                 name={value.name}
                 accessor="value"
+                disabled={submitting}
               />
             ))}
           <CleverButton
             full_width={true}
             button_type="signin"
-            disabled={has_pending_changes ? false : true}
+            disabled={submitting || !has_pending_changes ? true : false}
           >
             login
           </CleverButton>

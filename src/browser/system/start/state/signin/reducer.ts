@@ -22,16 +22,21 @@ const INITIAL_STATE: IinitialState = {
 };
 
 const loginReducer = (state = INITIAL_STATE, action) => {
-  const { payload, name } = action;
-  console.log("ANG ACTIONS:", payload);
-  if (action.payload === "") alert();
+  const { payload } = action;
+  const field = payload?.name ? payload.name : ""
+  console.log("payload:", action.payload )
   switch (action.type) {
     case LoginTypes.LOGIN_FIELD_CHANGE:
       return {
         ...state,
         ...payload,
-        has_pending_changes: payload.name === "" ? true : false,
+        // has_pending_changes: payload && payload.name && payload[field] ? true : false
       };
+      case LoginTypes.HAS_PENDING_CHANGES:
+        return {
+          ...state,
+          ...payload,
+        };
     case LoginTypes.LOGIN_USER_START:
       return {
         ...state,
