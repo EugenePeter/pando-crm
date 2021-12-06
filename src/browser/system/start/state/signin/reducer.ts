@@ -1,5 +1,15 @@
 import { LoginTypes, AuthTypes, LiveSearch } from "./types";
 
+interface IUserDATA {
+  company_name: string,
+  email: string,
+  id: string,
+  message:  string,
+  messagesss:   string,
+  successfuly_signedin: boolean,
+  token: string
+}
+
 interface IinitialState {
   is_authenticated: boolean;
   done_checking_auth: boolean;
@@ -9,6 +19,7 @@ interface IinitialState {
   submitting: boolean;
   submitted: boolean;
   login_success: boolean;
+  user_data: {}
 }
 const INITIAL_STATE: IinitialState = {
   is_authenticated: false,
@@ -19,6 +30,15 @@ const INITIAL_STATE: IinitialState = {
   submitting: false,
   submitted: false,
   login_success: false,
+  user_data: {
+    company_name: "",
+    email: "",
+    id: "",
+    message: "",
+    messagesss: "",
+    successfuly_signedin: false,
+    token: ""
+  }
 };
 
 const loginReducer = (state = INITIAL_STATE, action) => {
@@ -45,6 +65,10 @@ const loginReducer = (state = INITIAL_STATE, action) => {
     case LoginTypes.LOGIN_USER_SUCCESS:
       return {
         ...state,
+      user_data: {
+        ...state.user_data,
+        ...payload
+        },
         success: action.payload,
       };
     case LiveSearch.SEARCH:

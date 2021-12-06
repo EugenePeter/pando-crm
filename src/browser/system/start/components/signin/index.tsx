@@ -12,7 +12,7 @@ const Signin = () => {
   const dispatch = useDispatch();
   const state = useSelector((state: RootStateOrAny) => state.loginReducer);
   const { submitting, has_pending_changes } = state;
-  console.log("READING STATE:", state);
+  // console.log("READING STATE:", state);
 
   const field_value_ref = useRef(null);
 

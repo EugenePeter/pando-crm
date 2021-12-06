@@ -1,7 +1,7 @@
 import { takeLatest, put, call, select } from "redux-saga/effects";
 import { LoginTypes } from "./types";
 import {login} from './api'
-import { UpdateLoginHasPendingChange } from "./actions";
+import { LoginUserActionSuccess, UpdateLoginHasPendingChange } from "./actions";
 
 export const checkIfLoginFieldsHasValue = function* () {
   const {email = '', password = ''} = yield select((state) => state.loginReducer || {})
@@ -22,6 +22,9 @@ const loginSubmitAsync = function* (value) {
   console.log("LOGIN SUBMIT VALUE:" , value)
   try {
     const response = yield login({email, password})
+    const {token, successfuly_signedin} = response
+    yield token && successfuly_signedin && put(LoginUserActionSuccess(response))
+    console.log('LOGIN RESPONSE:', successfuly_signedin)
   } catch(error) {}
 }
 

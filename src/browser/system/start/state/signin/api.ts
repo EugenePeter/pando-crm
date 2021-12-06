@@ -1,11 +1,12 @@
 import axios from "axios";
 export const login = async (value) => {
-  console.log("API VALUE:", value)
+  const URL = "http://localhost:9090/login";
+console.log("login value:", value)
   try {
-    const { data } = await axios.get("http://localhost:1010/login", {
-      withCredentials: true,
+    const { data } = await axios.post(URL, value, {
+      withCredentials: true
     });
-    // console.log("IS AUTHORIZED:", data);
+    console.log("IS AUTHORIZED:", data);
     return data;
   } catch (e) {
     console.log("current user ERROR:", e);

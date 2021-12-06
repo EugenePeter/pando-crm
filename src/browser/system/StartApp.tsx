@@ -1,13 +1,13 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Route, useHistory, useLocation } from "react-router-dom";
-
+import { Route, useHistory, useLocation, Switch } from "react-router-dom";
 import { CheckAuthorization } from "./start/state/check-auth";
-
 import { Unauthorize } from "./start/components";
 
 const StartApp = () => {
   const state = useSelector((state: any) => state);
+  const {loginReducer} = state!
+  const {token, successfuly_signedin} = loginReducer?.user_data!
   const dispatch = useDispatch();
   const navigate = useHistory();
   const URL = useLocation().pathname;
@@ -21,11 +21,27 @@ const StartApp = () => {
   }, []);
 
   useEffect(() => {
-    // done_checking_auth && !is_authenticated && navigate.push("signin");
-    !is_authenticated && navigate.push("signin");
-  }, [done_checking_auth]);
+    !is_authenticated && navigate.push("/signin");
+  }, [done_checking_auth, is_authenticated]);
 
-  return <>{is_authenticated ? <h1>THIS IS THE DASHBOARD</h1> : <Unauthorize />}</>;
+  useEffect(() => {
+    if(token && successfuly_signedin) {
+      navigate.push('/')
+      dispatch(CheckAuthorization());
+    }
+  }, [token, successfuly_signedin])
+
+  return (
+    <>
+      <Switch>
+        <Route path='/'>
+          {
+            !is_authenticated ? <Unauthorize /> : <h1>THIS IS THE DASHBOARD</h1>
+          }
+        </Route>
+      </Switch>
+    </>
+  )
 };
 
 export default StartApp;

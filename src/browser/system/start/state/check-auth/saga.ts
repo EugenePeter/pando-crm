@@ -15,7 +15,7 @@ export const checkAuthAsync = function* () {
   try {
     const response = yield checkAuthorization();
     const { isAuthorize } = response;
-    isAuthorize ? yield unAuthorizedUser(isAuthorize) : yield unAuthorizedUser(isAuthorize);
+    isAuthorize ? yield authorizedUser(isAuthorize) : yield unAuthorizedUser(isAuthorize);
   } catch (error) {}
 };
 

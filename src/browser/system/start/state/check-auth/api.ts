@@ -1,7 +1,7 @@
 import axios from "axios";
 export const checkAuthorization = async () => {
   try {
-    const { data } = await axios.get("http://localhost:1010/currentuser", {
+    const { data } = await axios.get("http://localhost:9090/currentuser", {
       withCredentials: true,
     });
     // //TEMPORARY, REMOVE AFTER TESTING

@@ -15,11 +15,7 @@ interface IProps {
 const App: React.FC<IProps> = (props) => {
   return (
     <Provider store={store}>
-      <Switch>
-        <Route path="/">
-          <StartApp />
-        </Route>
-      </Switch>
+      <StartApp />
     </Provider>
   );
 };
