@@ -49,7 +49,7 @@ const Signin = () => {
               <p>just a moment</p>
             </>
           ) : (
-            <h4 style={{width: '100%', textAlign: 'center'}}>sign in</h4>
+            <h4 style={{ width: "100%", textAlign: "center" }}>sign in</h4>
           )}
           {fields &&
             Object.entries(fields).map(([key, value], index: number) => (

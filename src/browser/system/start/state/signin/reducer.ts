@@ -1,13 +1,13 @@
 import { LoginTypes, AuthTypes, LiveSearch } from "./types";
 
 interface IUserDATA {
-  company_name: string,
-  email: string,
-  id: string,
-  message:  string,
-  messagesss:   string,
-  successfuly_signedin: boolean,
-  token: string
+  company_name: string;
+  email: string;
+  id: string;
+  message: string;
+  messagesss: string;
+  successfuly_signedin: boolean;
+  token: string;
 }
 
 interface IinitialState {
@@ -19,7 +19,7 @@ interface IinitialState {
   submitting: boolean;
   submitted: boolean;
   login_success: boolean;
-  user_data: {}
+  user_data: {};
 }
 const INITIAL_STATE: IinitialState = {
   is_authenticated: false,
@@ -37,14 +37,13 @@ const INITIAL_STATE: IinitialState = {
     message: "",
     messagesss: "",
     successfuly_signedin: false,
-    token: ""
-  }
+    token: "",
+  },
 };
 
 const loginReducer = (state = INITIAL_STATE, action) => {
   const { payload } = action;
-  const field = payload?.name ? payload.name : ""
-  console.log("payload:", action.payload )
+  const field = payload?.name ? payload.name : "";
   switch (action.type) {
     case LoginTypes.LOGIN_FIELD_CHANGE:
       return {
@@ -52,11 +51,11 @@ const loginReducer = (state = INITIAL_STATE, action) => {
         ...payload,
         // has_pending_changes: payload && payload.name && payload[field] ? true : false
       };
-      case LoginTypes.HAS_PENDING_CHANGES:
-        return {
-          ...state,
-          ...payload,
-        };
+    case LoginTypes.HAS_PENDING_CHANGES:
+      return {
+        ...state,
+        ...payload,
+      };
     case LoginTypes.LOGIN_USER_START:
       return {
         ...state,
@@ -65,9 +64,9 @@ const loginReducer = (state = INITIAL_STATE, action) => {
     case LoginTypes.LOGIN_USER_SUCCESS:
       return {
         ...state,
-      user_data: {
-        ...state.user_data,
-        ...payload
+        user_data: {
+          ...state.user_data,
+          ...payload,
         },
         success: action.payload,
       };

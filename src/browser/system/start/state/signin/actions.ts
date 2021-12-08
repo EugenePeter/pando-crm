@@ -6,12 +6,11 @@ export const HandleLoginFieldChange = (value) => ({
 });
 
 export const UpdateLoginHasPendingChange = (value) => {
-console.log("SELECTOR 2:", value)
   return {
     type: LoginTypes.HAS_PENDING_CHANGES,
-    payload: value
-  }
-}
+    payload: value,
+  };
+};
 
 export const LoginUserActionStart = () => ({ type: LoginTypes.LOGIN_USER_START });
 
