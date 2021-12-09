@@ -11,8 +11,6 @@ interface IUserDATA {
 }
 
 interface IinitialState {
-  is_authenticated: boolean;
-  done_checking_auth: boolean;
   has_pending_changes: boolean;
   email: null | string;
   password: null | string;
@@ -22,8 +20,6 @@ interface IinitialState {
   user_data: {};
 }
 const INITIAL_STATE: IinitialState = {
-  is_authenticated: false,
-  done_checking_auth: false,
   has_pending_changes: false,
   email: null,
   password: null,
@@ -68,7 +64,6 @@ const loginReducer = (state = INITIAL_STATE, action) => {
           ...state.user_data,
           ...payload,
         },
-        success: action.payload,
       };
     case LiveSearch.SEARCH:
       return {

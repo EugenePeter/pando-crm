@@ -6,11 +6,13 @@ export const fields: IFields = {
     required: true,
     place_holder: "enter email",
     name: "email",
+    field_type: "text"
   },
   password: {
     label: "password",
     required: true,
     place_holder: "enter password",
     name: "password",
+    field_type: "password"
   },
 };

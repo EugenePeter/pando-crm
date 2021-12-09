@@ -20,9 +20,10 @@ interface FormInputProps {
   current_step?: any;
   type?: string;
   disabled?: boolean
+  field_type?: string
 }
 const FormInput: React.FC<FormInputProps> = (props) => {
-  const { value, placeholder, label, actions, name, current_step, type, accessor, disabled } = props;
+  const { value, placeholder, label, actions, name, current_step, type, accessor, disabled, field_type } = props;
   const [is_input_active, setInputActive] = useState(false);
   const [is_label_click, setLabelClick] = useState(false);
 
@@ -67,7 +68,7 @@ const FormInput: React.FC<FormInputProps> = (props) => {
       </Label>
       {type && type === "text" && (
         <Input
-          type="text"
+          type={field_type}
           value={value}
           placeholder={is_input_active ? placeholder : ""}
           onChange={handleInputChange}

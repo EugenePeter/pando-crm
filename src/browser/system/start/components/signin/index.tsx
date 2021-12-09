@@ -56,7 +56,8 @@ const Signin = () => {
               <FormInput
                 key={`key--${index}`}
                 value={state[key] ?? ""}
-                type="text"
+                type='text'
+                field_type={value.field_type}
                 placeholder={value.place_holder}
                 label={value.label}
                 actions={actionsProp ?? {}}

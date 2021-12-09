@@ -16,7 +16,7 @@ import { loginReducer } from "../system/start/state/signin";
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: [],
+  whitelist: ['checkAuthReducer',"loginReducer"],
 };
 
 const rootReducer = combineReducers(reducers);

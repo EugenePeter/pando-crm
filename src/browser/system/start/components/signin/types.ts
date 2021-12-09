@@ -11,6 +11,6 @@ export interface IFields {
     required: true;
     place_holder: string;
     name: string;
-    field_type?: "text";
+    field_type?: "password";
   };
 }

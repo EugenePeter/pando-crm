@@ -13,25 +13,22 @@ const StartApp = () => {
   const navigate = useHistory();
   const URL = useLocation().pathname;
   const {
-    checkAuthReducer: { is_authenticated, done_checking_auth },
+    checkAuthReducer: { is_authenticated },
   } = state;
 
-  console.log("STATE:", state);
-
   useEffect(() => {
-    dispatch(CheckAuthorization());
-    console.log("is_authenticated", is_authenticated);
-  }, []);
-
+    !is_authenticated && dispatch(CheckAuthorization());
+  }, [is_authenticated]);
+  
   useEffect(() => {
     const route = !is_authenticated && !token && !successfuly_signedin ? "/signin" : "/";
     navigate.push(route);
-  }, [done_checking_auth, is_authenticated]);
+  }, [ is_authenticated]);
 
   useEffect(() => {
     if (token && successfuly_signedin) {
       navigate.push("/");
-      dispatch(CheckAuthorization());
+      !is_authenticated && dispatch(CheckAuthorization());
     }
   }, [token, successfuly_signedin]);
 

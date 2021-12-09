@@ -4,12 +4,6 @@ export const checkAuthorization = async () => {
     const { data } = await axios.get("http://localhost:1010/currentuser", {
       withCredentials: true,
     });
-    // //TEMPORARY, REMOVE AFTER TESTING
-    // if (data.isAuthorize === false) {
-    //   return {
-    //     isAuthorize: true,
-    //   };
-    // }
     return data;
   } catch (e) {
     console.log("current user ERROR:", e);
