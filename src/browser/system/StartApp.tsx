@@ -1,9 +1,12 @@
-import React, { useEffect } from "react";
+import React, { useEffect, Suspense, lazy } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Route, useHistory, useLocation, Switch } from "react-router-dom";
+import { Route, useHistory, Switch } from "react-router-dom";
 import { CheckAuthorization } from "./start/state/check-auth";
-import { Unauthorize } from "./start/components";
-import { Dashboard } from "../application/";
+// import { Unauthorize } from "./start/components";
+// import { Dashboard } from "../application/";
+
+const Dashboard = lazy(() => import('../application/dashboard'))
+const Unauthorize = lazy(() => import('./start/components/unauthorize'))
 
 const StartApp = () => {
   const state = useSelector((state: any) => state);
@@ -11,19 +14,15 @@ const StartApp = () => {
   const { token, successfuly_signedin } = loginReducer?.user_data!;
   const dispatch = useDispatch();
   const navigate = useHistory();
-  const URL = useLocation().pathname;
   const {
     checkAuthReducer: { is_authenticated },
   } = state;
 
   useEffect(() => {
     !is_authenticated && dispatch(CheckAuthorization());
-  }, [is_authenticated]);
-  
-  useEffect(() => {
     const route = !is_authenticated && !token && !successfuly_signedin ? "/signin" : "/";
     navigate.push(route);
-  }, [ is_authenticated]);
+  }, [is_authenticated]);
 
   useEffect(() => {
     if (token && successfuly_signedin) {
@@ -35,7 +34,9 @@ const StartApp = () => {
   return (
     <>
       <Switch>
-        <Route path="/">{!is_authenticated ? <Unauthorize /> : <Dashboard />}</Route>
+        <Suspense fallback={<>...LOAIDING</>}>
+          <Route path="/">{!is_authenticated ? <Unauthorize /> : <Dashboard />}</Route>
+        </Suspense>
       </Switch>
     </>
   );
