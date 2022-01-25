@@ -1,13 +1,17 @@
-import React from "react";
-import { Container, LeftNav, MainPanel } from "../../components";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Container, MainPanel } from "../../components";
+import { LeftNavigation } from "../../atomic";
+
+import Client from "./client";
 
 const Dashboard = () => {
+  const dispatch = useDispatch();
   return (
     <Container>
-      <LeftNav>
-        <h1>THIS THE LEFT NAV</h1>
-      </LeftNav>
+      <LeftNavigation />
       <MainPanel>
+        <Client />
         <h1>MAIN PANEL</h1>
       </MainPanel>
     </Container>

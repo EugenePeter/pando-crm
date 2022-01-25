@@ -2,11 +2,11 @@ import React, { useEffect, Suspense, lazy } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Route, useHistory, Switch } from "react-router-dom";
 import { CheckAuthorization } from "./start/state/check-auth";
-// import { Unauthorize } from "./start/components";
-// import { Dashboard } from "../application/";
 
-const Dashboard = lazy(() => import('../application/dashboard'))
-const Unauthorize = lazy(() => import('./start/components/unauthorize'))
+const Dashboard = lazy(() => import("../application/dashboard"));
+const Unauthorize = lazy(() => import("./start/components/unauthorize"));
+
+import { LoaderCircle } from "../components";
 
 const StartApp = () => {
   const state = useSelector((state: any) => state);
@@ -20,7 +20,8 @@ const StartApp = () => {
 
   useEffect(() => {
     !is_authenticated && dispatch(CheckAuthorization());
-    const route = !is_authenticated && !token && !successfuly_signedin ? "/signin" : "/";
+    const route =
+      !is_authenticated && !token && !successfuly_signedin ? "/signin" : "/";
     navigate.push(route);
   }, [is_authenticated]);
 
@@ -34,8 +35,10 @@ const StartApp = () => {
   return (
     <>
       <Switch>
-        <Suspense fallback={<>...LOAIDING</>}>
-          <Route path="/">{!is_authenticated ? <Unauthorize /> : <Dashboard />}</Route>
+        <Suspense fallback={<LoaderCircle />}>
+          <Route path="/">
+            {!is_authenticated ? <Unauthorize /> : <Dashboard />}
+          </Route>
         </Suspense>
       </Switch>
     </>

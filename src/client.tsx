@@ -9,9 +9,7 @@ import App from "./browser/App";
 
 hydrate(
   <ThemeProvider theme={{}}>
-    {/* <BrowserRouter> */}
     <App />
-    {/* </BrowserRouter> */}
   </ThemeProvider>,
   document.getElementById("root")
 );

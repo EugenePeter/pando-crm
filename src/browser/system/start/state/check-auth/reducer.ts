@@ -2,6 +2,7 @@ import { AuthTypes } from "./types";
 
 const INITIAL_STATE = {
   is_authenticated: false,
+  // is_authenticated: true,
   done_checking_auth: false,
 };
 

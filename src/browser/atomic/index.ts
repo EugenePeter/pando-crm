@@ -1,1 +1,1 @@
-export {};
+export {default as LeftNavigation} from './left-nav';
