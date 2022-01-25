@@ -4,6 +4,7 @@ export const checkAuthorization = async () => {
     const { data } = await axios.get("http://localhost:1010/currentuser", {
       withCredentials: true,
     });
+    console.log("CHECK AUTH:", data);
     return data;
   } catch (e) {
     console.log("current user ERROR:", e);

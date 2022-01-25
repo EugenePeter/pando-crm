@@ -1,63 +1,43 @@
-// import path from "path";
-// import * as grpc from "@grpc/grpc-js";
-// import * as protoLoader from "@grpc/proto-loader";
-// //@ts-ignore
-// import { ApplicationConfigHandlers } from "../proto/applicationConfigPackage/ApplicationConfig";
-
-// import { ProtoGrpcType } from "../../proto/application-config";
-
 import React from "react";
+import axios from "axios";
+import { useEffect } from "react";
 
 const Client = () => {
-  const PORT = 9090;
-  const PROTO_FILE = "../../proto/application-config.proto";
+  const getToken = async () => {
+    //TEMPORARY POST REQUEST TO GET ACCESS TOKEN
+    //ACCESS TOKEN NEEDED TO COMMUNICATE WITH THE GRPC SERVER
+    const URL = "https://login.staging.pandolink.com/connect/token";
+    const config = {
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+    };
+    try {
+      const {
+        data: { access_token },
+      } = await axios.post(
+        URL!,
+        new URLSearchParams({
+          grant_type: "client_credentials",
+          client_id: "687E1D75-6BEE-4FB8-B79A-A9B0142E0282",
+          client_secret: "3e8HCTcSv4zxCQNLqSppfX3rgN4x7682u9Y",
+          username: "EugenePando@gmail.com",
+          password: "greatSystem30Passw0rd3!",
+        }),
+        config
+      );
+      return access_token;
+    } catch (e) {
+      console.log("current user ERROR:", e);
+    }
+  };
 
-  // const packageDef = protoLoader.loadSync(PROTO_FILE);
-  // const grpcObj = grpc.loadPackageDefinition(
-  //   packageDef
-  // ) as unknown as ProtoGrpcType;
+  useEffect(() => {
+    getToken()
+      .then((access_token) => console.log("GOT THE ACCESS TOKEN", access_token))
+      .catch((error) => console.log("ERROR IN RETRIEVING ACCESS TOKEN"));
+  }, []);
 
-  // const applicationConfigPackage = grpcObj.applicationConfigPackage;
-
-  // const client = new applicationConfigPackage.ApplicationConfig(
-  //   `0.0.0.0:${PORT}`,
-  //   grpc.credentials.createInsecure()
-  // );
-
-  // const deadline = new Date();
-
-  // deadline.setSeconds(deadline.getSeconds() + 5);
-  // client.waitForReady(deadline, (err) => {
-  //   if (err) {
-  //     console.log("CLIENT ERROR:", err);
-  //     return;
-  //   }
-  //   onClientReady();
-  // });
-
-  // function onClientReady() {
-  //   client.PingPong({ message: "Ping" }, (err, result) => {
-  //     if (err) {
-  //       console.log(err);
-  //       return;
-  //     }
-  //     console.log("RESULT:", result);
-  //   });
-
-  //   //   const stream = client.TestStream({
-  //   //     message: "heeey",
-  //   //   });
-  //   //   stream.on("data", (chunk) => console.log("CHUNK:", chunk));
-  //   //   stream.on("end", () => {
-  //   //     console.log("COMMUNICATION ENDED");
-  //   //   });
-
-  //   const stream = client.TestStream({});
-  //   stream.on("data", (chunk) => console.log("CHUNK:", chunk));
-  //   stream.on("end", () => {
-  //     console.log("COMMUNICATION ENDED");
-  //   });
-  // }
   return (
     <div>
       <h1>SURVEY DASHBOARD</h1>
