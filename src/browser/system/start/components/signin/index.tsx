@@ -2,7 +2,10 @@ import React, { useRef, useEffect } from "react";
 import { useDispatch, useSelector, RootStateOrAny } from "react-redux";
 import { StyledSignInSignUp, SignInSignUpWrapper, StyledLink } from "../styles";
 import { Modifiers } from "../../../../global-styles";
-import { HandleLoginFieldChange, LoginUserActionStart } from "../../state/signin";
+import {
+  HandleLoginFieldChange,
+  LoginUserActionStart,
+} from "../../state/signin";
 
 import { fields } from "./fields";
 import { CleverButton, FormInput, Loader } from "../../../../components";
@@ -12,7 +15,6 @@ const Signin = () => {
   const dispatch = useDispatch();
   const state = useSelector((state: RootStateOrAny) => state.loginReducer);
   const { submitting, has_pending_changes } = state;
-  // console.log("READING STATE:", state);
 
   const field_value_ref = useRef(null);
 
@@ -41,7 +43,10 @@ const Signin = () => {
   return (
     <>
       <Modifiers />
-      <StyledSignInSignUp onSubmit={handleSubmit} className="styled-sigin-signup">
+      <StyledSignInSignUp
+        onSubmit={handleSubmit}
+        className="styled-sigin-signup"
+      >
         <SignInSignUpWrapper>
           {submitting ? (
             <>
@@ -56,7 +61,7 @@ const Signin = () => {
               <FormInput
                 key={`key--${index}`}
                 value={state[key] ?? ""}
-                type='text'
+                type="text"
                 field_type={value.field_type}
                 placeholder={value.place_holder}
                 label={value.label}

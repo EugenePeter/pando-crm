@@ -1,8 +1,13 @@
 import React from "react";
 import axios from "axios";
 import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+
+import { GetSurveyStart } from "./state/survey";
 
 const Client = () => {
+  const dispatch = useDispatch();
+
   const getToken = async () => {
     //TEMPORARY POST REQUEST TO GET ACCESS TOKEN
     //ACCESS TOKEN NEEDED TO COMMUNICATE WITH THE GRPC SERVER
@@ -19,8 +24,8 @@ const Client = () => {
         URL!,
         new URLSearchParams({
           grant_type: "client_credentials",
-          client_id: "687E1D75-6BEE-4FB8-B79A-A9B0142E0282",
-          client_secret: "3e8HCTcSv4zxCQNLqSppfX3rgN4x7682u9Y",
+          client_id: "81CD8602-3B16-4AD6-81EC-89D6B9465F80",
+          client_secret: "wbtCpQYNhYcogScfRcZDAMzMYsfKcRzpEvB",
           username: "EugenePando@gmail.com",
           password: "greatSystem30Passw0rd3!",
         }),
@@ -33,9 +38,12 @@ const Client = () => {
   };
 
   useEffect(() => {
+    dispatch(GetSurveyStart());
     getToken()
-      .then((access_token) => console.log("GOT THE ACCESS TOKEN", access_token))
-      .catch((error) => console.log("ERROR IN RETRIEVING ACCESS TOKEN"));
+      .then((access_token) => {
+        // access_token && grpcClient(access_token);
+      })
+      .catch((error) => console.log("ERROR IN RETRIEVING ACCESS TOKEN", error));
   }, []);
 
   return (

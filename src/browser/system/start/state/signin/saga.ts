@@ -4,7 +4,9 @@ import { login } from "./api";
 import { LoginUserActionSuccess, UpdateLoginHasPendingChange } from "./actions";
 
 export const checkIfLoginFieldsHasValue = function* () {
-  const { email = "", password = "" } = yield select((state) => state.loginReducer || {});
+  const { email = "", password = "" } = yield select(
+    (state) => state.loginReducer || {}
+  );
   yield email && password
     ? put(UpdateLoginHasPendingChange({ has_pending_changes: true }))
     : put(UpdateLoginHasPendingChange({ has_pending_changes: false }));
@@ -19,13 +21,17 @@ export const loginSaga = function* () {
 };
 
 const loginSubmitAsync = function* (value) {
-  const { email = "", password = "" } = yield select((state) => state.loginReducer || {});
+  const { email = "", password = "" } = yield select(
+    (state) => state.loginReducer || {}
+  );
   console.log("LOGIN SUBMIT VALUE:", value);
   try {
     const response = yield login({ email, password });
-    
+
     const { token, successfuly_signedin } = response;
-    yield token && successfuly_signedin && put(LoginUserActionSuccess(response));
+    yield token &&
+      successfuly_signedin &&
+      put(LoginUserActionSuccess(response));
     console.log("LOGIN RESPONSE:", successfuly_signedin);
   } catch (error) {}
 };
