@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, Profiler } from "react";
 import { Switch, Route } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Container, MainPanel } from "../../components";
@@ -22,7 +22,14 @@ const Dashboard = () => {
       <MainPanel>
         <Switch>
           <Route exact path="/surveys">
-            <Client />
+            <Profiler
+              id="Client"
+              onRender={(id, phase, actualDuration) => {
+                console.log(id, phase, actualDuration);
+              }}
+            >
+              <Client />
+            </Profiler>
           </Route>
           <Route exact path="/documents">
             <h1>DOCUMENTS</h1>

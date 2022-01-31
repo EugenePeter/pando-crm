@@ -12,9 +12,13 @@ const Client = () => {
     ({ grpcClientReducer }: any) => grpcClientReducer.client
   );
 
+  // useEffect(() => {
+  //   client && dispatch(GetSurveyStart());
+  // }, [client]);
+
   useEffect(() => {
-    client && dispatch(GetSurveyStart());
-  }, [client]);
+    dispatch(GetSurveyStart());
+  }, []);
 
   return (
     <div>
