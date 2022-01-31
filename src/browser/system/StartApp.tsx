@@ -19,7 +19,8 @@ const StartApp = () => {
   } = state;
 
   useEffect(() => {
-    !is_authenticated && dispatch(CheckAuthorization());
+    // !is_authenticated && dispatch(CheckAuthorization());
+    dispatch(CheckAuthorization());
     const route =
       !is_authenticated && !token && !successfuly_signedin ? "/signin" : "/";
     navigate.push(route);

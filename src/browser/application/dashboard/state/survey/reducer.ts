@@ -21,7 +21,6 @@ export const surveyReducer = (
   state: ISurveyReducer = INITIAL_STATE,
   action: any
 ) => {
-  console.log("WHAT ACTION:", action.type);
   switch (action.type) {
     case SurveyTypes.GET_SURVEYS_START:
       return {
@@ -31,7 +30,7 @@ export const surveyReducer = (
     case SurveyTypes.GET_SURVEYS_SUCCESS:
       return {
         ...state,
-        survey: {
+        surveys: {
           ...state.surveys,
           ...action.payload,
         },

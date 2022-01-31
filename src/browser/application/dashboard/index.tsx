@@ -7,12 +7,15 @@ import { LeftNavigation } from "../../atomic";
 import Client from "./client";
 
 import { InitializeGRPCclientStart } from "./state/grpc-client/actions";
+import { GetTokenStart } from "./state/get-token/actions";
 
 const Dashboard = () => {
   const dispatch = useDispatch();
+  const grpcToken = useSelector(({ grpcToken }: any) => grpcToken.token);
   useEffect(() => {
-    dispatch(InitializeGRPCclientStart());
-  }, []);
+    dispatch(GetTokenStart());
+    grpcToken && dispatch(InitializeGRPCclientStart());
+  }, [grpcToken]);
   return (
     <Container>
       <LeftNavigation />

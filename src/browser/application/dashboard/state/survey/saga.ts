@@ -6,12 +6,15 @@ import { survey } from "./api";
 
 const getSurveySagaAsync = function* () {
   const { client } = yield select((state: any) => state.grpcClientReducer);
-  console.log("NAAY CLIENT:", client);
+  const { token } = yield select((state: any) => state.grpcToken);
+  const params = {
+    client,
+    token,
+  };
   try {
-    yield survey(client, (survey) => {
-      console.log("SURVEY SURVEY RESULTS:", survey);
-      put(GetSurveySuccess(survey));
-    });
+    const results = yield survey({ client, token });
+    yield console.log("yeheey:", results);
+    yield put(GetSurveySuccess(results));
   } catch (e) {}
 };
 

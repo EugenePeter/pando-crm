@@ -4,6 +4,7 @@ import { checkAuthSaga } from "../system/start/state/check-auth/saga";
 import { loginSaga, loginSubmitSaga } from "../system/start/state/signin/saga";
 import { grpcClientConnectionSaga } from "../application/dashboard/state/grpc-client/saga";
 import { getSurveySaga } from "../application/dashboard/state/survey";
+import { getTokenSaga } from "../application/dashboard/state/get-token";
 
 export default function* () {
   yield all([
@@ -12,5 +13,6 @@ export default function* () {
     call(loginSubmitSaga),
     call(grpcClientConnectionSaga),
     call(getSurveySaga),
+    call(getTokenSaga),
   ]);
 }

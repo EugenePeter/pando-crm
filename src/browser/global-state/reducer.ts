@@ -3,6 +3,7 @@ import { loginReducer } from "../system/start/state/signin";
 import {
   surveyReducer,
   grpcClientReducer,
+  grpcToken,
 } from "../application/dashboard/state";
 
 export const reducers = {
@@ -10,4 +11,5 @@ export const reducers = {
   loginReducer,
   grpcClientReducer,
   surveyReducer,
+  grpcToken,
 };

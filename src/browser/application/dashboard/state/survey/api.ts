@@ -1,28 +1,15 @@
-import { response } from "express";
-import { call } from "redux-saga/effects";
-import { SurveyAdminServiceClient } from "../../../../../grpcweb/pando/api/survey/v1/AdminServiceClientPb";
 import { GetSurveysRequest } from "../../../../../grpcweb/pando/api/survey/v1/admin_pb";
-import { SurveyDetailList } from "../../../../../grpcweb/pando/api/survey/v1/shared_pb";
 
-const TOKEN =
-  "eyJhbGciOiJSUzI1NiIsImtpZCI6IkI2NzFDNjEwNjlFNEQ1QTU0MzNGNTQ2QkQwRDVBRTE1MzlCMTYxMzgiLCJ0eXAiOiJhdCtqd3QiLCJ4NXQiOiJ0bkhHRUduazFhVkRQMVJyME5XdUZUbXhZVGcifQ.eyJuYmYiOjE2NDMzNjE1ODYsImV4cCI6MTY0MzM2NTE4NiwiaXNzIjoiaHR0cHM6Ly9sb2dpbi5zdGFnaW5nLnBhbmRvbGluay5jb20iLCJhdWQiOlsiY2FudmFzc2luZ19zZXJ2aWNlIiwiY29tbXVuaWNhdGlvbl9zZXJ2aWNlIiwiY29udGFjdF9zZXJ2aWNlIiwiZXNpZ25fc2VydmljZSIsIklkZW50aXR5U2VydmVyQXBpIiwicGFuZG9fYXBwX3NlcnZpY2UiLCJ2YXVsdF9zZXJ2aWNlIiwic3VydmV5X3NlcnZpY2UiLCJ0ZW1wbGF0ZV9zZXJ2aWNlIl0sImNsaWVudF9pZCI6IjgxQ0Q4NjAyLTNCMTYtNEFENi04MUVDLTg5RDZCOTQ2NUY4MCIsImFjY2Vzc19jb2RlIjoiUFVCTElDLUFQSSIsInZhdWx0X3NlcnZpY2U6Y3VzdG9tZXJfaW5mbyI6WyJhbGxpYW5jZTpyZWFkIiwiYWxsaWFuY2U6d3JpdGUiLCJhbGxpYW5jZTpkZWxldGUiXSwicGVyc29uYWxfaW5mbyI6WyJhbGxpYW5jZTpyZWFkIiwiYWxsaWFuY2U6d3JpdGUiLCJ0ZXN0OnJlYWQiLCJhbGxpYW5jZTpkZWxldGUiLCJkZW1vOndyaXRlIl0sImVzaWduIjpbImFsbGlhbmNlOnJlYWQiLCJhbGxpYW5jZTp3cml0ZSJdLCJlc2lnbjpjbGFpbXNfbWFuYWdlbWVudCI6ImFsbGlhbmNlIiwidGVtcGxhdGUiOlsiYWxsaWFuY2U6cmVhZCIsImFsbGlhbmNlOndyaXRlIiwiYWxkZXI6cmVhZCIsImFsZGVyOmRlbGV0ZSIsImFsZGVyOndyaXRlIiwidGVzdDpyZWFkIiwidGVzdDp3cml0ZSIsInRlc3Q6ZGVsZXRlIiwiZGVtbzp3cml0ZSIsImRlbW86cmVhZCIsImFsbGlhbmNlOmRlbGV0ZSJdLCJlc2lnbjpzaWduYXRvcnkiOlsidGVzdDpyZWFkIiwiYWxsaWFuY2U6cmVhZCJdLCJlc2lnbjpyZXF1ZXN0IjpbImFsbGlhbmNlOndyaXRlIiwiYWxsaWFuY2U6cmVhZCIsImRlbW86d3JpdGUiLCJkZW1vOnJlYWQiXSwiZXNpZ246dGVtcGxhdGUiOlsiYWxsaWFuY2U6d3JpdGUiLCJhbGxpYW5jZTpyZWFkIiwiZGVtbzp3cml0ZSIsImRlbW86cmVhZCIsImFsbGlhbmNlOmRlbGV0ZSJdLCJzdXJ2ZXk6aW5zdGFuY2UiOlsiYWxsaWFuY2U6cmVhZCIsImFsbGlhbmNlOndyaXRlIl0sInN1cnZleTp0ZW1wbGF0ZSI6WyJhbGxpYW5jZTpyZWFkIiwiYWxsaWFuY2U6d3JpdGUiLCJkZW1vOndyaXRlIiwiZGVtbzpyZWFkIl0sInN1cnZleTpyZXBvcnRzIjoiYWxsaWFuY2U6aW5zdGFuY2VzIiwic3VydmV5OnJlcXVlc3QiOlsiYWxsaWFuY2U6d3JpdGUiLCJkZW1vOndyaXRlIiwiZGVtbzpyZWFkIl0sInNjb3BlIjpbImNhbnZhc3NpbmciLCJjb21tdW5pY2F0aW9uIiwiY29udGFjdCIsImVzaWduIiwiZXNpZ246YWRtaW4iLCJJZGVudGl0eVNlcnZlckFwaSIsInBhbmRvX2FwcCIsInBlcnNvbmFsX2luZm8iLCJ2YXVsdF9zZXJ2aWNlIiwic3VydmV5Iiwic3VydmV5OmFkbWluIiwic3VydmV5OnJlcG9ydHMiLCJ0ZW1wbGF0ZSIsInRlbXBsYXRlOmFkbWluIl19.gdD7HB-c1f8gdn_tJWbH15ZFGrwy0MKAchHs2K0s4RBcEr8LNxVxOXzLoGI-XQNp9NAr1fO3ajH_YkmCsZlWGQzPjP-fNpGTgAZqgzF7s4qbwoCoJ-UyyNoFhwNKTd13ZsWi3bci79gjAw9qsZOujjiuSHNIzv2embdikBLQUiJptu11jHRUMpP1IBDnUciD3EeVx-1nFXscgC7F7MaNjunHBh9VG60ZN_fzBshMuHo6EBcczTU6KM3cLLjnoRPZtIjLC9X1VYSRZajvs7YuA7GyL2fU2EJvOXiYnS7OkZoA9scB5kxmhYZ4Uy993zhGD1s1kvD_TnCrdgI5GXdawg";
-
-export const survey = (client: any, callback) => {
+export const survey = async ({ client, token }) => {
   const surveysRequest = new GetSurveysRequest();
   surveysRequest.setOrganizationCode("alliance");
-  surveysRequest.setResultsPerPage(2);
-  client.getSurveys(
-    surveysRequest,
-    {
-      authorization: `Bearer ${TOKEN}`,
-    },
-    (err, response: SurveyDetailList) => {
-      if (err) {
-        console.error("GETTING SURVEY ERROR:", err);
-        return;
-      }
-      response && callback(response.toObject());
-    }
-  );
-  return "test";
+  surveysRequest.setResultsPerPage(200);
+  try {
+    const response = await client.getSurveys(surveysRequest, {
+      authorization: `Bearer ${token}`,
+    });
+    return response.toObject();
+  } catch (e) {
+    console.log("ERROR GETTING SURVEYS:", e);
+  }
 };
