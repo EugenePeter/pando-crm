@@ -1,42 +1,14 @@
-import React, { useEffect, Profiler } from "react";
-import { Switch, Route } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { Container, MainPanel } from "../../components";
-import { LeftNavigation } from "../../atomic";
+import React from "react";
 
-import Client from "./client";
+import DashboardConsumer from "./DashboardConsumer";
+import DashboardProvider from "./DashboardProvider";
 
-import { InitializeGRPCclientStart } from "./state/grpc-client/actions";
-import { GetTokenStart } from "./state/get-token/actions";
-
-const Dashboard = () => {
-  const dispatch = useDispatch();
-  const grpcToken = useSelector(({ grpcToken }: any) => grpcToken.token);
-  useEffect(() => {
-    dispatch(GetTokenStart());
-    grpcToken && dispatch(InitializeGRPCclientStart());
-  }, [grpcToken]);
+const Dashboard: React.FC<any> = (props) => {
+  const { ...rest } = props;
   return (
-    <Container>
-      <LeftNavigation />
-      <MainPanel>
-        <Switch>
-          <Route exact path="/surveys">
-            <Profiler
-              id="Client"
-              onRender={(id, phase, actualDuration) => {
-                console.log(id, phase, actualDuration);
-              }}
-            >
-              <Client />
-            </Profiler>
-          </Route>
-          <Route exact path="/documents">
-            <h1>DOCUMENTS</h1>
-          </Route>
-        </Switch>
-      </MainPanel>
-    </Container>
+    <DashboardProvider {...rest}>
+      <DashboardConsumer {...rest} />
+    </DashboardProvider>
   );
 };
 

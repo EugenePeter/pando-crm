@@ -10,6 +10,7 @@
     "start:prod": "NODE_ENV=production node build/server.js"
   },
   "dependencies": {
+    "@xstate/react": "^2.0.0",
     "axios": "^0.24.0",
     "cookies-js": "^1.2.3",
     "express": "^4.17.1",

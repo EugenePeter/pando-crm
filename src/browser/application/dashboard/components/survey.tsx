@@ -3,10 +3,10 @@ import axios from "axios";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { GetSurveyStart } from "./state/survey";
-import { GetTokenStart } from "./state/get-token";
+import { GetSurveyStart } from "../state/survey";
+import { GetTokenStart } from "../state/get-token";
 
-const Client = () => {
+const Survey = () => {
   const dispatch = useDispatch();
   const client = useSelector(
     ({ grpcClientReducer }: any) => grpcClientReducer.client
@@ -27,4 +27,4 @@ const Client = () => {
   );
 };
 
-export default Client;
+export default Survey;
