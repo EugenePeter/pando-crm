@@ -8,3 +8,7 @@ export interface Selector {
   selector?: SelectorType;
   value?: any;
 }
+
+export interface IRecord<TEntry> {
+  [key: string]: TEntry;
+}

@@ -6,15 +6,22 @@ import { useDispatch, useSelector } from "react-redux";
 import { GetSurveyStart } from "../state/survey";
 import { GetTokenStart } from "../state/get-token";
 
+import { useClever } from "../machine/record-machine";
+
 const Survey = () => {
   const dispatch = useDispatch();
   const client = useSelector(
     ({ grpcClientReducer }: any) => grpcClientReducer.client
   );
 
-  // useEffect(() => {
-  //   client && dispatch(GetSurveyStart());
-  // }, [client]);
+  const [state, send] = useClever({
+    slice: {
+      selector: "context",
+      value: "user",
+    },
+  });
+
+  console.log("READING STATE:", state);
 
   useEffect(() => {
     dispatch(GetSurveyStart());
@@ -27,4 +34,4 @@ const Survey = () => {
   );
 };
 
-export default Survey;
+export default React.memo(Survey);
