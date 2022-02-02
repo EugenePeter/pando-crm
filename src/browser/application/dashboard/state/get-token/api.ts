@@ -3,6 +3,7 @@ import axios from "axios";
 export const getToken = async () => {
   //TEMPORARY POST REQUEST TO GET ACCESS TOKEN
   //ACCESS TOKEN NEEDED TO COMMUNICATE WITH THE GRPC SERVER
+  console.log("I AM RUNNING THIS NUMBER OF TIMES TOKEN TOKEN");
   const URL = "https://login.staging.pandolink.com/connect/token";
   const config = {
     headers: {

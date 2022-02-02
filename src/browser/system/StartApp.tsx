@@ -1,4 +1,4 @@
-import React, { useEffect, Suspense, lazy } from "react";
+import React, { useEffect, Suspense, lazy, Profiler } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Route, useHistory, Switch } from "react-router-dom";
 import { CheckAuthorization } from "./start/state/check-auth";
@@ -19,8 +19,8 @@ const StartApp = () => {
   } = state;
 
   useEffect(() => {
-    // !is_authenticated && dispatch(CheckAuthorization());
-    dispatch(CheckAuthorization());
+    !is_authenticated && dispatch(CheckAuthorization());
+    // dispatch(CheckAuthorization());
     const route =
       !is_authenticated && !token && !successfuly_signedin ? "/signin" : "/";
     navigate.push(route);
@@ -38,7 +38,23 @@ const StartApp = () => {
       <Switch>
         <Suspense fallback={<LoaderCircle />}>
           <Route path="/">
-            {!is_authenticated ? <Unauthorize /> : <Dashboard />}
+            {!is_authenticated ? (
+              <Unauthorize />
+            ) : (
+              <Profiler
+                id="dashboard"
+                onRender={(id, phase, actualDuration) =>
+                  console.log(
+                    "CHECKING RENDER OF PARENT DASHBOARD",
+                    id,
+                    phase,
+                    actualDuration
+                  )
+                }
+              >
+                <Dashboard />
+              </Profiler>
+            )}
           </Route>
         </Suspense>
       </Switch>

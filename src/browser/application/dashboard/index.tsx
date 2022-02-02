@@ -13,9 +13,11 @@ const Dashboard = () => {
   const dispatch = useDispatch();
   const grpcToken = useSelector(({ grpcToken }: any) => grpcToken.token);
   useEffect(() => {
-    dispatch(GetTokenStart());
-    grpcToken && dispatch(InitializeGRPCclientStart());
+    !grpcToken
+      ? dispatch(GetTokenStart())
+      : dispatch(InitializeGRPCclientStart());
   }, [grpcToken]);
+
   return (
     <Container>
       <LeftNavigation />
@@ -25,7 +27,12 @@ const Dashboard = () => {
             <Profiler
               id="Client"
               onRender={(id, phase, actualDuration) => {
-                console.log(id, phase, actualDuration);
+                console.log(
+                  "CHECKING RENDERS OF CLIENT",
+                  id,
+                  phase,
+                  actualDuration
+                );
               }}
             >
               <Client />
@@ -40,4 +47,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default React.memo(Dashboard);
