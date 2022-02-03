@@ -3,7 +3,7 @@ import { InitializeGRPCclientTypes } from "./types";
 export interface ISurveys {
   [index: string]: any;
 }
-export interface IloginReducer {
+export interface GRPCclientReducer {
   connecting_to_grpc_server: boolean;
   connected_to_grpc_server: boolean;
   connecting_to_grpc_server_failed: boolean;
@@ -11,7 +11,7 @@ export interface IloginReducer {
   surveys?: ISurveys;
 }
 
-const INITIAL_STATE: IloginReducer = {
+const INITIAL_STATE: GRPCclientReducer = {
   connecting_to_grpc_server: false,
   connected_to_grpc_server: false,
   connecting_to_grpc_server_failed: false,
@@ -20,7 +20,7 @@ const INITIAL_STATE: IloginReducer = {
 };
 
 export const grpcClientReducer = (
-  state: IloginReducer = INITIAL_STATE,
+  state: GRPCclientReducer = INITIAL_STATE,
   action: any
 ) => {
   switch (action.type) {

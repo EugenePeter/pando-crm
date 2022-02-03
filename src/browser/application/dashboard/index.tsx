@@ -1,4 +1,4 @@
-import React, { useEffect, Profiler } from "react";
+import React, { useEffect, Profiler, useCallback } from "react";
 import { Switch, Route } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Container, MainPanel } from "../../components";
@@ -11,7 +11,10 @@ import { GetTokenStart } from "./state/get-token/actions";
 
 const Dashboard = () => {
   const dispatch = useDispatch();
-  const grpcToken = useSelector(({ grpcToken }: any) => grpcToken.token);
+  const grpcToken = useSelector(
+    ({ grpcToken }: any) => grpcToken.token,
+    (prev, next) => prev === next
+  );
   useEffect(() => {
     !grpcToken
       ? dispatch(GetTokenStart())
@@ -47,4 +50,9 @@ const Dashboard = () => {
   );
 };
 
-export default React.memo(Dashboard);
+// export default React.memo(Dashboard, (prev, next) => {
+//   console.log("PREV:", prev, "NEXT:", next);
+//   return prev !== next;
+// });
+
+export default Dashboard;
