@@ -1,7 +1,7 @@
 import React from "react";
 import axios from "axios";
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useCallback, useMemo } from "react";
+import { useDispatch, useSelector, TypedUseSelectorHook } from "react-redux";
 
 import { GetSurveyStart } from "../state/survey";
 import { GetTokenStart } from "../state/get-token";
@@ -24,8 +24,8 @@ const Survey = () => {
   console.log("READING STATE:", state);
 
   useEffect(() => {
-    dispatch(GetSurveyStart());
-  }, []);
+    client && dispatch(GetSurveyStart());
+  }, [client]);
 
   return (
     <div>

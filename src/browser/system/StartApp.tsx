@@ -19,8 +19,8 @@ const StartApp = () => {
   } = state;
 
   useEffect(() => {
-    // !is_authenticated && dispatch(CheckAuthorization());
-    dispatch(CheckAuthorization());
+    !is_authenticated && dispatch(CheckAuthorization());
+    // dispatch(CheckAuthorization());
     const route =
       !is_authenticated && !token && !successfuly_signedin ? "/signin" : "/";
     navigate.push(route);
@@ -44,7 +44,12 @@ const StartApp = () => {
               <Profiler
                 id="dashboard"
                 onRender={(id, phase, actualDuration) =>
-                  console.log(id, phase, actualDuration)
+                  console.log(
+                    "CHECKING RENDER OF PARENT DASHBOARD",
+                    id,
+                    phase,
+                    actualDuration
+                  )
                 }
               >
                 <Dashboard />

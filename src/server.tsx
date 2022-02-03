@@ -30,6 +30,8 @@ const jsScriptTagsFromAssets = (assets, entrypoint, extra = "") => {
     : "";
 };
 
+
+
 export const renderApp = (req: express.Request, res: express.Response) => {
   const context: StaticRouterContext = {};
   const sheet = new ServerStyleSheet();

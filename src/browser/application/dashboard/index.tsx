@@ -12,4 +12,9 @@ const Dashboard: React.FC<any> = (props) => {
   );
 };
 
+// export default React.memo(Dashboard, (prev, next) => {
+//   console.log("PREV:", prev, "NEXT:", next);
+//   return prev !== next;
+// });
+
 export default Dashboard;
